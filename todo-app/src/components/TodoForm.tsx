@@ -28,7 +28,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ todoData, onSubmit }) => {
     e.preventDefault();
     if (formData.title === '' || formData.description === '' || !formData.status || formData.dueDate === '') {
       setError('All fields are required.');
-      return;
+      return; // バリデーションエラー時は画面遷移しない
     }
     setError('');
 
@@ -44,7 +44,8 @@ const TodoForm: React.FC<TodoFormProps> = ({ todoData, onSubmit }) => {
       onSubmit({ ...formData, updatedAt, dueDate: formatDate(formData.dueDate) });
     }
 
-    router.push('/todo'); // フォーム送信後にリスト画面に戻る
+    // バリデーションエラーがなかった場合のみ画面遷移
+    router.push('/todo');
   };
 
   const handleChange = (field: keyof Todo, value: string) => {

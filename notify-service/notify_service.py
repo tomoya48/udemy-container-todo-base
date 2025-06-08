@@ -1,7 +1,7 @@
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from datetime import datetime, timedelta
+import datetime
 import smtplib
 from email.mime.text import MIMEText
 import pytz
@@ -95,14 +95,14 @@ def notify_due_tasks():
     """期限に応じてタスクを通知"""
     try:
         todos = get_todos()
-        today = datetime.now(JST).date()
-        tomorrow = today + timedelta(days=1)
+        today = datetime.datetime.now(JST).date()
+        tomorrow = today + datetime.timedelta(days=1)
 
         def get_due_date(todo):
             due = todo['dueDate']
             if isinstance(due, str):
                 return parse(due).date()
-            elif isinstance(due, datetime):
+            elif isinstance(due, datetime.datetime):
                 return due.date()
             else:
                 return None
