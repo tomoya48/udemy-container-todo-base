@@ -4,7 +4,9 @@ import '@testing-library/jest-dom';
 import Navbar from './Navbar';
 
 jest.mock('next/link', () => {
-  return ({ href, children, ...props }: any) => <a href={href} {...props}>{children}</a>;
+  const Link = ({ href, children, ...props }: { href: string; children: React.ReactNode }) => <a href={href} {...props}>{children}</a>;
+  Link.displayName = 'MockNextLink';
+  return Link;
 });
 
 describe('Navbar', () => {

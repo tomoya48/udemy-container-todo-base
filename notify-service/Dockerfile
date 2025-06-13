@@ -6,10 +6,10 @@ WORKDIR /app
 
 # 必要なファイルをコピー
 COPY requirements.txt requirements.txt
-COPY notify-service.py notify-service.py
+COPY notify_service.py notify_service.py
 
 # ライブラリをインストール
 RUN pip install -r requirements.txt
 
 # アプリケーションを起動
-CMD ["python", "notify-service.py"]
+CMD ["python", "notify_service.py"]

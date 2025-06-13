@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
 
+const isAzure = process.env.POSTGRES_HOST && process.env.POSTGRES_HOST.includes('postgres.database.azure.com');
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
   host: process.env.POSTGRES_HOST,
   database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
   port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+  ssl: isAzure ? { rejectUnauthorized: false } : false,
 });
 
 export async function GET(req: Request) {
@@ -52,10 +54,10 @@ export async function POST(req: Request) {
     const formattedDueDate = new Date(dueDate).toISOString(); // ISO形式に変換
 
     const query = `
-      INSERT INTO todos (id, title, description, status, due_date, created_at, updated_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
-      RETURNING *;
-    `;
+        INSERT INTO todos (id, title, description, status, due_date, created_at, updated_at)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        RETURNING *;
+      `;
     const values = [id, title, description, status, formattedDueDate, createdAt, updatedAt];
     const result = await pool.query(query, values);
 
@@ -79,11 +81,11 @@ export async function PUT(req: Request) {
     const formattedDueDate = new Date(dueDate).toISOString(); // ISO形式に変換
 
     const query = `
-      UPDATE todos
-      SET title = $2, description = $3, status = $4, due_date = $5, created_at = $6, updated_at = $7
-      WHERE id = $1
-      RETURNING *;
-    `;
+        UPDATE todos
+        SET title = $2, description = $3, status = $4, due_date = $5, created_at = $6, updated_at = $7
+        WHERE id = $1
+        RETURNING *;
+      `;
     const values = [id, title, description, status, formattedDueDate, createdAt, updatedAt];
     const result = await pool.query(query, values);
 
