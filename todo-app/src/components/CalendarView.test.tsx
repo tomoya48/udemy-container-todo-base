@@ -8,15 +8,15 @@ jest.mock('react-big-calendar', () => {
   const actual = jest.requireActual('react-big-calendar');
   return {
     ...actual,
-    Calendar: ({ events, components }: any) => (
+    Calendar: ({ events, components }: { events: unknown[]; components: { event?: (props: { event: unknown }) => React.ReactNode } }) => (
       <div data-testid="mock-calendar">
-        {events.map((event: any, idx: number) =>
+        {events.map((event, idx) =>
           components && components.event ? (
             <div key={idx} data-testid="event-wrapper">
               {components.event({ event })}
             </div>
           ) : (
-            <div key={idx}>{event.title}</div>
+            <div key={idx}>{(event as { title: string }).title}</div>
           )
         )}
       </div>
