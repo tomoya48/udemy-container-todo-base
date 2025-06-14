@@ -114,15 +114,15 @@ def notify_due_tasks():
         if today_tasks:
             print(f"Tasks due today: {len(today_tasks)}")
             body = create_email_body(today_tasks, "Tasks due today")
-            send_email("Today's Tasks", body)
+            send_email("【Today's Tasks】", body)
         if tomorrow_tasks:
             print(f"Tasks due tomorrow: {len(tomorrow_tasks)}")
             body = create_email_body(tomorrow_tasks, "Tasks due tomorrow")
-            send_email("Tomorrow's Tasks", body)
+            send_email("【Tomorrow's Tasks】", body)
         if expired_tasks:
             print(f"Expired tasks: {len(expired_tasks)}")
             body = create_email_body(expired_tasks, "Tasks that are overdue")
-            send_email("Expired Tasks", body)
+            send_email("【Expired Tasks】", body)
     except Exception as e:
         logging.error(f"An error occurred while notifying tasks: {e}")
         

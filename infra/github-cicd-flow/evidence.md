@@ -7,6 +7,14 @@ az ad sp create-for-rbac --name "ToDoAppDeployAuth" --role contributor `
 --json-auth
 ```
 
+notify-serviceへの権限付与
+```bash
+az role assignment create `
+  --assignee サービスプリンシパルのクライアントID `
+  --role contributor `
+  --scope /subscriptions/{サブスクID}/resourceGroups/rg-todo/providers/Microsoft.Web/sites/udemytodoapp-notify
+```
+
 ACR への AcrPush 権限付与
 ```bash
 az role assignment create `
