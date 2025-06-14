@@ -31,10 +31,6 @@ udemytodoappacr01
 ![alt text](image-2.png)
 
 
-WEBAPP_NAMEも登録
-udemytodoapp-app
-
-
 RESOURCE_GROUPも登録
 rg-todo
 
