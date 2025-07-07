@@ -1,4 +1,4 @@
-
+# ローカル環境でのToDoアプリと通知サービスの稼働
 
 ## ローカル開発準備
 init.sqlのタスクの更新日時を変更。稼働確認できるように、翌日などにする
@@ -42,9 +42,19 @@ DockerのVolumeを削除
 docker volume rm udemy-container-todo-app_postgres_data
 ```
 
+Dockerのコンテナを削除
+```bash
+docker rm -f postgres_db
+```
+
+Dockerのイメージを削除
+```bash
+docker rmi postgres:latest
+```
+
 ## ローカル開発
 ### ToDoアプリ
-.envファイルを作成し、以下の内容を記述します。
+.env.local ファイルを作成し、以下の内容を記述します。
 ```env
 POSTGRES_USER=udemy_learn_user
 POSTGRES_PASSWORD=udemy_learn_password
@@ -61,7 +71,15 @@ npm run dev
 ```
 
 ### 通知サービス
-.envファイルを作成し、以下の内容を記述します。
+#### Googleメール送信
+
+Googleアカウントにログインし、アプリパスワードを設定します。
+https://myaccount.google.com/apppasswords
+アプリ名とパスワードをコピーして控えておいてください。
+
+.env ファイルを作成し、以下の内容を記述します。
+SLEEP_SECONDSは、通知サービスが何秒ごとにデータベースを確認するかを指定します。動作確認のためであれば、60sなどに設定しておくと良いでしょう。
+
 ```env
 POSTGRES_USER="udemy_learn_user"
 POSTGRES_PASSWORD="udemy_learn_password"
@@ -75,10 +93,18 @@ RECIPIENT_EMAIL="メールアドレス"
 SLEEP_SECONDS="3600"
 ```
 
-venvを作成し、F5実行
+新しくVSCodeをnotify-serviceフォルダで開き、ターミナルを開いて以下のコマンドを実行します。
+```bash
+code ./notify-service
+```
+```bash
+pip install -r requirements.txt
+```
+```bash
+python notify_service.py
+```
 
-
-## Dockerビルドと起動
+## Dockerビルドとdocker-composeを使った起動
 
 ### ToDoアプリの環境変数ファイル
 .env.local.containerファイルを作成し、以下の内容を記述します。
