@@ -1,4 +1,4 @@
-# ローカル環境でのToDoアプリと通知サービスの稼働
+
 
 ## ローカル開発準備
 init.sqlのタスクの更新日時を変更。稼働確認できるように、翌日などにする
@@ -42,16 +42,6 @@ DockerのVolumeを削除
 docker volume rm udemy-container-todo-app_postgres_data
 ```
 
-Dockerのコンテナを削除
-```bash
-docker rm -f postgres_db
-```
-
-Dockerのイメージを削除
-```bash
-docker rmi postgres:latest
-```
-
 ## ローカル開発
 ### ToDoアプリ
 .env.local ファイルを作成し、以下の内容を記述します。
@@ -93,10 +83,7 @@ RECIPIENT_EMAIL="メールアドレス"
 SLEEP_SECONDS="3600"
 ```
 
-新しくVSCodeをnotify-serviceフォルダで開き、ターミナルを開いて以下のコマンドを実行します。
-```bash
-code ./notify-service
-```
+VSCodeをnotify-serviceフォルダで開き、ターミナルを開いて以下のコマンドを実行します。
 ```bash
 pip install -r requirements.txt
 ```
@@ -104,7 +91,8 @@ pip install -r requirements.txt
 python notify_service.py
 ```
 
-## Dockerビルドとdocker-composeを使った起動
+
+## Dockerビルドと起動
 
 ### ToDoアプリの環境変数ファイル
 .env.local.containerファイルを作成し、以下の内容を記述します。
@@ -147,7 +135,18 @@ docker-compose -f docker-compose.local.yml up -d
 az login
 ```
 
+ログイン情報の確認
+```bash
+az account show
+```
+
 ### Azureリソースの作成
+```bash
+cd .\infra
+```
+
+main.bicepのprefix名を一意な名前に変更します。小文字英字と数字のみにしましょう。
+例）todoappshrkm0708
 ```bash
 azd up
 ```
@@ -188,5 +187,5 @@ SUCCESS: Your up workflow to provision and deploy to Azure completed in 5 minute
 ./infraフォルダ参照
 
 - PostgreSQLにデータベース作成とテーブル作成、データ登録
-- ACRにToDoアプリと通知サービスのDockerイメージをプッシュ
+- ACRにToDoアプリと通知サービスのコンテナイメージをプッシュ
 - App ServiceにToDoアプリのデプロイ
