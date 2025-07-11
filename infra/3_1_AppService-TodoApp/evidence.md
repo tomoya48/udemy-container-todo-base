@@ -10,12 +10,12 @@
   },
   {
     "name": "POSTGRES_HOST",
-    "value": "udemytodoapp-pg.postgres.database.azure.com",
+    "value": "udemytodoappshrkm0708-pg.postgres.database.azure.com",
     "slotSetting": false
   },
   {
     "name": "POSTGRES_PASSWORD",
-    "value": "パスワード",
+    "value": "P@ssw0rd",
     "slotSetting": false
   },
   {
