@@ -34,6 +34,6 @@ jobs:
       - name: Deploy to Azure App Service
         run: |
           az webapp config container set \
-            --name udemytodoappkatsuki20250927-notify \
+            --name udemytodoappkatsuki20250927-notify\
             --resource-group ${{ secrets.RESOURCE_GROUP }} \
             --docker-custom-image-name ${{ secrets.ACR_NAME }}.azurecr.io/notify-service:${{ github.sha }}
